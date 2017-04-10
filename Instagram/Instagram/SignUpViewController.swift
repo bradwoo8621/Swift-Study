@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController {
+class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // Image View, 头像
     @IBOutlet weak var avaImg: UIImageView!
     // Text Fields
@@ -60,6 +60,16 @@ class SignUpViewController: UIViewController {
         self.view.isUserInteractionEnabled = true
         // 添加事件监听
         self.view.addGestureRecognizer(hideTap)
+		
+		// 定义头像点击事件
+		let imgTap = UITapGestureRecognizer(target: self,
+		                                    action: #selector(loadImg))
+		imgTap.numberOfTapsRequired = 1
+		avaImg.isUserInteractionEnabled = true
+		avaImg.addGestureRecognizer(imgTap)
+		// 让头像变成圆形
+		avaImg.layer.cornerRadius = avaImg.frame.width / 2
+		avaImg.clipsToBounds = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -100,6 +110,35 @@ class SignUpViewController: UIViewController {
     func hideKeyboardTap(recognizer: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
+	
+	// 响应头像点击事件, 打开相册
+	// 需要在Info.plist中增加关于使用照片库的声明
+	func loadImg(recognizer: UITapGestureRecognizer) {
+		let picker = UIImagePickerController()
+		picker.delegate = self
+		// 指定来源为照片库
+		picker.sourceType = .photoLibrary
+		// 指可以编辑
+		picker.allowsEditing = true
+		present(picker, animated: true, completion: nil)
+	}
+	
+	// 响应选取照片库
+	func imagePickerController(_ picker: UIImagePickerController,
+	                           didFinishPickingMediaWithInfo info: [String : Any]) {
+		// 选择经过裁剪的图像
+		avaImg.image = info[UIImagePickerControllerEditedImage] as? UIImage
+		// UIImagePickerControllerOriginalImage		// 选择的原始图像, 未经裁剪
+		// UIImagePickerContollerMediaURL			// 文件系统中影片的URL
+		// UIImagePickerControllerCropRect			// 应用到原始图像当中裁剪的矩形
+		// UIImagePikcerControllerMediaType			// 用户选择的图像的类型, 包括kUTTypeImage和kUTTypeMovie
+		self.dismiss(animated: true, completion: nil)
+	}
+	
+	// 响应取消选取照片
+	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+		self.dismiss(animated: true, completion: nil)
+	}
     
     /*
     // MARK: - Navigation
