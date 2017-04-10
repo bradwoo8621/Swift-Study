@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVOSCloud
 
 class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // Image View, 头像
@@ -78,6 +79,69 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     @IBAction func signupButton_clicked(_ sender: UIButton) {
+		// 隐藏虚拟键盘
+		self.view.endEditing(true)
+		
+		if usernameTxt.text!.isEmpty
+				|| passwordTxt.text!.isEmpty
+				|| repeatPasswordTxt.text!.isEmpty
+				|| emailTxt.text!.isEmpty
+				|| fullnameTxt.text!.isEmpty
+				|| bioTxt.text!.isEmpty
+				|| webTxt.text!.isEmpty {
+			let alert = UIAlertController(title: "Alert",
+			                              message: "Fill all fields",
+			                              preferredStyle: .alert)
+			let ok = UIAlertAction(title: "OK",
+			                       style: .cancel,
+			                       handler: nil)
+			alert.addAction(ok)
+			self.present(alert, animated: true, completion: nil)
+			return
+		}
+		
+		if passwordTxt.text != repeatPasswordTxt.text {
+			let alert = UIAlertController(title: "Alert",
+			                              message: "Password mismatch",
+			                              preferredStyle: .alert)
+			let ok = UIAlertAction(title: "OK",
+			                       style: .cancel,
+			                       handler: nil)
+			alert.addAction(ok)
+			self.present(alert, animated: true, completion: nil)
+			return
+		}
+		
+		// AVUser是LeanCloud的对象
+		let user = AVUser()
+		user.username = usernameTxt.text?.lowercased()
+		user.email = emailTxt.text?.lowercased()
+		user.password = passwordTxt.text
+		
+		// 以下属性不是AVUser的标准属性, 只能通过[]来添加, 不能直接dot
+		user["fullname"] = fullnameTxt.text?.lowercased()
+		user["bio"] = bioTxt.text?.lowercased()
+		user["web"] = webTxt.text?.lowercased()
+		user["gender"] = ""
+		// 头像数据
+		let avaData = UIImageJPEGRepresentation(avaImg.image!, 0.5)
+		let avaFile = AVFile(name: "ava.jpg", data: avaData!)
+		user["ava"] = avaFile
+		
+		// 提交数据
+		user.signUpInBackground { (success: Bool, error: Error?) in
+			if success {
+				print("用户注册成功")
+				// 记录用户名
+				UserDefaults.standard.set(user.username, forKey: "username")
+				// 立刻同步到磁盘上, 如果不调用, 则系统自行决定什么写入到磁盘
+				UserDefaults.standard.synchronize()
+				let appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
+				appDelegate.login()
+			} else {
+				print(error?.localizedDescription as Any)
+			}
+		}
     }
 
     @IBAction func cancelButton_clicked(_ sender: UIButton) {
