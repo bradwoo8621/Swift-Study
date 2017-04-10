@@ -56,6 +56,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+	func login() {
+		// 获取存储的用户名
+		let username: String? = UserDefaults.standard.string(forKey: "username")
+		if username != nil {
+			let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+			let myTabBar = storyboard.instantiateViewController(withIdentifier: "TabBar") as! UITabBarController
+			window?.rootViewController = myTabBar
+		}
+	}
 }
 
