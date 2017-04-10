@@ -9,7 +9,14 @@
 import UIKit
 
 class SignInViewController: UIViewController {
-
+    // text fields
+    @IBOutlet weak var usernameTxt: UITextField!
+    @IBOutlet weak var passwordTxt: UITextField!
+    // buttons
+    @IBOutlet weak var signinBtn: UIButton!
+    @IBOutlet weak var signupBtn: UIButton!
+    @IBOutlet weak var forgetBtn: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,6 +28,9 @@ class SignInViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func signInBtn_clicked(_ sender: UIButton) {
+        print("登录按钮被单击")
+    }
 
     /*
     // MARK: - Navigation
