@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVOSCloud
 
 class SignInViewController: UIViewController {
     // text fields
@@ -21,6 +22,11 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+		let hideTap = UITapGestureRecognizer(target: self,
+		                                     action: #selector(hideKeyboard))
+		hideTap.numberOfTapsRequired = 1
+		self.view.isUserInteractionEnabled = true
+		self.view.addGestureRecognizer(hideTap)
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,8 +36,37 @@ class SignInViewController: UIViewController {
     
     @IBAction func signInBtn_clicked(_ sender: UIButton) {
         print("登录按钮被单击")
+		
+		self.view.endEditing(true)
+		
+		if usernameTxt.text!.isEmpty || passwordTxt.text!.isEmpty {
+			let alert = UIAlertController(title: "OK",
+			                              message: "Fill all fields",
+			                              preferredStyle: .alert)
+			let ok = UIAlertAction(title: "OK",
+			                       style: .cancel,
+			                       handler: nil)
+			alert.addAction(ok);
+			self.present(alert, animated: true, completion: nil)
+			return
+		}
+		
+		AVUser.logInWithUsername(inBackground: usernameTxt.text!,
+		                         password: passwordTxt.text!) { (user: AVUser?, error: Error?) in
+			if (error == nil) {
+				UserDefaults.standard.set(user!.username, forKey: "username")
+				UserDefaults.standard.synchronize()
+				// 调用login方法
+				let appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
+				appDelegate.login()
+			}
+		}
     }
 
+	func hideKeyboard(recognizer: UITapGestureRecognizer) {
+		self.view.endEditing(true)
+	}
+	
     /*
     // MARK: - Navigation
 
@@ -41,5 +76,5 @@ class SignInViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+	
 }

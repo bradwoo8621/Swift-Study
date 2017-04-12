@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import AVOSCloud
 
 class ResetPasswordViewController: UIViewController {
+    @IBOutlet weak var emailTxt: UITextField!
 
+    @IBOutlet weak var resetBtn: UIButton!
+    @IBOutlet weak var cancelBtn: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,7 +26,42 @@ class ResetPasswordViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func onResetButtonClicked(_ sender: UIButton) {
+        self.view.endEditing(true)
+        if emailTxt.text!.isEmpty {
+            let alert = UIAlertController(title: "OK",
+                                          message: "Fill email",
+                                          preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK",
+                                   style: .cancel,
+                                   handler: nil)
+            alert.addAction(ok)
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        AVUser.requestPasswordResetForEmail(inBackground: emailTxt.text!) {(success: Bool, error: Error?) in
+            if success {
+                let alert = UIAlertController(title: "OK",
+                                              message: "Reset Password Email Sent",
+                                              preferredStyle: .alert)
+                let ok = UIAlertAction(title: "OK",
+                                       style: .default,
+                                       handler: {(_) in
+                    self.dismiss(animated: true, completion: nil)
+                })
+                alert.addAction(ok)
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                print(error!.localizedDescription)
+            }
+        }
+    }
 
+    @IBAction func onCancelButtonClicked(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 

@@ -25,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 跟踪统计应用打开情况
         AVAnalytics.trackAppOpened(launchOptions: launchOptions)
 		
+		login()
+		
 		// 从LeanCloud获取一个TestObject对象, 如果没有则创建,
         // let testObject = AVObject(className: "TestObject")
 		// 插入一条数据, 列foo, 值bar, 如果没有foo列, 则创建
