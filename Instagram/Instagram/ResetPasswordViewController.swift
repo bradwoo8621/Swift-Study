@@ -19,6 +19,24 @@ class ResetPasswordViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+		emailTxt.frame = CGRect(x: 10,
+		                        y: 120,
+		                        width: self.view.frame.width - 20,
+		                        height: 30)
+		resetBtn.frame = CGRect(x: 20,
+		                        y: emailTxt.frame.origin.y + 50,
+		                        width: self.view.frame.width / 4,
+		                        height: 30)
+		cancelBtn.frame = CGRect(x: self.view.frame.width / 4 * 3 - 20,
+		                         y: resetBtn.frame.origin.y,
+		                         width: resetBtn.frame.width,
+		                         height: 30)
+		
+		let hideTap = UITapGestureRecognizer(target: self,
+		                                     action: #selector(hideKeyboard))
+		hideTap.numberOfTapsRequired = 1
+		self.view.isUserInteractionEnabled = true
+		self.view.addGestureRecognizer(hideTap)
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,8 +77,13 @@ class ResetPasswordViewController: UIViewController {
     }
 
     @IBAction func onCancelButtonClicked(_ sender: UIButton) {
+		self.view.endEditing(true)
         self.dismiss(animated: true, completion: nil)
     }
+	
+	func hideKeyboard(recognizer: UITapGestureRecognizer) {
+		self.view.endEditing(true)
+	}
     
     /*
     // MARK: - Navigation

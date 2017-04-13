@@ -71,6 +71,49 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
 		// 让头像变成圆形
 		avaImg.layer.cornerRadius = avaImg.frame.width / 2
 		avaImg.clipsToBounds = true
+		
+		// 布局
+		avaImg.frame = CGRect(x: self.view.frame.width / 2 - 40,
+		                      y: 40,
+		                      width: 80,
+		                      height: 80)
+		let viewWidth = self.view.frame.width;
+		usernameTxt.frame = CGRect(x: 10,
+		                           y: avaImg.frame.origin.y + 90,
+		                           width: viewWidth - 20,
+		                           height: 30)
+		passwordTxt.frame = CGRect(x: 10,
+		                           y: usernameTxt.frame.origin.y + 40,
+		                           width: viewWidth - 20,
+		                           height: 30)
+		repeatPasswordTxt.frame = CGRect(x: 10,
+		                                 y: passwordTxt.frame.origin.y + 40,
+		                                 width: viewWidth - 20,
+		                                 height: 30)
+		emailTxt.frame = CGRect(x: 10,
+								y: repeatPasswordTxt.frame.origin.y + 60,
+		                        width: viewWidth - 20,
+		                        height: 30)
+		fullnameTxt.frame = CGRect(x: 10,
+		                           y: emailTxt.frame.origin.y + 40,
+		                           width: viewWidth - 20,
+		                           height: 30)
+		bioTxt.frame = CGRect(x: 10,
+		                      y: fullnameTxt.frame.origin.y + 40,
+		                      width: viewWidth - 20,
+		                      height: 30)
+		webTxt.frame = CGRect(x: 10,
+		                      y: bioTxt.frame.origin.y + 40,
+		                      width: viewWidth - 20,
+		                      height: 30)
+		signupBtn.frame = CGRect(x: 20,
+		                         y: webTxt.frame.origin.y + 50,
+		                         width: viewWidth / 4,
+		                         height: 30)
+		cancelBtn.frame = CGRect(x: viewWidth - viewWidth / 4 - 20,
+		                         y: signupBtn.frame.origin.y,
+		                         width: viewWidth / 4,
+		                         height: 30)
     }
 
     override func didReceiveMemoryWarning() {
@@ -146,6 +189,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
 
     @IBAction func cancelButton_clicked(_ sender: UIButton) {
         // 动画方式去除通过modally方式添加的控制器
+		self.view.endEditing(true)
         self.dismiss(animated: true, completion: nil)
     }
     

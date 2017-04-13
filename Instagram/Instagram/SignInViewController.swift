@@ -10,6 +10,7 @@ import UIKit
 import AVOSCloud
 
 class SignInViewController: UIViewController {
+    @IBOutlet weak var titleLbl: UILabel!
     // text fields
     @IBOutlet weak var usernameTxt: UITextField!
     @IBOutlet weak var passwordTxt: UITextField!
@@ -27,6 +28,28 @@ class SignInViewController: UIViewController {
 		hideTap.numberOfTapsRequired = 1
 		self.view.isUserInteractionEnabled = true
 		self.view.addGestureRecognizer(hideTap)
+        
+        titleLbl.frame = CGRect(x: 10, y: 80, width: self.view.frame.width - 20, height: 50)
+        usernameTxt.frame = CGRect(x: 10,
+                                   y: titleLbl.frame.origin.y + 70,
+                                   width: self.view.frame.width - 20,
+                                   height: 30)
+        passwordTxt.frame = CGRect(x: 10,
+                                   y: usernameTxt.frame.origin.y + 40,
+                                   width: self.view.frame.width - 20,
+                                   height: 30)
+        forgetBtn.frame = CGRect(x: 10,
+                                 y: passwordTxt.frame.origin.y + 30,
+                                 width: self.view.frame.width - 20,
+                                 height: 30)
+        signinBtn.frame = CGRect(x: 20,
+                                 y: forgetBtn.frame.origin.y + 40,
+                                 width: self.view.frame.width / 4,
+                                 height: 30)
+        signupBtn.frame = CGRect(x: self.view.frame.width - signinBtn.frame.width - 20,
+                                 y: signinBtn.frame.origin.y,
+                                 width: signinBtn.frame.width,
+                                 height: 30)
     }
 
     override func didReceiveMemoryWarning() {
