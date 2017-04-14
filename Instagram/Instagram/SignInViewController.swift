@@ -28,7 +28,8 @@ class SignInViewController: UIViewController {
 		hideTap.numberOfTapsRequired = 1
 		self.view.isUserInteractionEnabled = true
 		self.view.addGestureRecognizer(hideTap)
-        
+		
+		titleLbl.font = UIFont(name: "Pacifico", size: 25)
         titleLbl.frame = CGRect(x: 10, y: 80, width: self.view.frame.width - 20, height: 50)
         usernameTxt.frame = CGRect(x: 10,
                                    y: titleLbl.frame.origin.y + 70,
@@ -50,6 +51,11 @@ class SignInViewController: UIViewController {
                                  y: signinBtn.frame.origin.y,
                                  width: signinBtn.frame.width,
                                  height: 30)
+		
+		let bg = UIImageView(frame: CGRect(x:0, y:0, width: self.view.frame.width, height: self.view.frame.height))
+		bg.image = UIImage(named: "bg.jpg")
+		bg.layer.zPosition = -1
+		self.view.addSubview(bg)
     }
 
     override func didReceiveMemoryWarning() {

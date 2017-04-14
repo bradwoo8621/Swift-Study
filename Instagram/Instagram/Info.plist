@@ -38,5 +38,14 @@
 	<string>需要使用该设备的媒体库</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>需要使用该设备的照片库</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Pacifico.ttf</string>
+	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

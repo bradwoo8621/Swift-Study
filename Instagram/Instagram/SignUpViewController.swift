@@ -114,7 +114,12 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
 		                         y: signupBtn.frame.origin.y,
 		                         width: viewWidth / 4,
 		                         height: 30)
-    }
+
+		let bg = UIImageView(frame: CGRect(x:0, y:0, width: self.view.frame.width, height: self.view.frame.height))
+		bg.image = UIImage(named: "bg.jpg")
+		bg.layer.zPosition = -1
+		self.view.addSubview(bg)
+	}
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

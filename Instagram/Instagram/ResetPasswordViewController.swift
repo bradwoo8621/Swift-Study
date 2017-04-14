@@ -37,6 +37,11 @@ class ResetPasswordViewController: UIViewController {
 		hideTap.numberOfTapsRequired = 1
 		self.view.isUserInteractionEnabled = true
 		self.view.addGestureRecognizer(hideTap)
+		
+		let bg = UIImageView(frame: CGRect(x:0, y:0, width: self.view.frame.width, height: self.view.frame.height))
+		bg.image = UIImage(named: "bg.jpg")
+		bg.layer.zPosition = -1
+		self.view.addSubview(bg)
     }
 
     override func didReceiveMemoryWarning() {
