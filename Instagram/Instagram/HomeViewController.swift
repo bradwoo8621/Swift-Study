@@ -75,6 +75,7 @@ class HomeViewController: UICollectionViewController {
 		header.bioLbl.text = AVUser.current()?.object(forKey: "bio") as? String
 		header.bioLbl.sizeToFit()
 		
+		// TODO: always throw exception, donot know why
 		// let avaQuery = AVUser.current()?.object(forKey: "ava") as! AVFile
 		// avaQuery.getDataInBackground {(data: Data?, error: Error?) in
 		//	header.avaImg.image = UIImage(data: data!)
