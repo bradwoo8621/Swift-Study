@@ -209,7 +209,7 @@
         <scene sceneID="q1q-r5-PaF">
             <objects>
                 <collectionViewController storyboardIdentifier="HomeViewController" id="qZ7-zp-p2W" customClass="HomeViewController" customModule="Instagram" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="ePE-zg-W75">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="ePE-zg-W75">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -220,7 +220,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="T8h-sK-aVR" customClass="HomePictureCell" customModule="Instagram" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HomeCell" id="T8h-sK-aVR" customClass="HomePictureCell" customModule="Instagram" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="240" width="106" height="106"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -422,7 +422,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5iq-yq-qo6" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="cyy-P6-5Lp"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QlQ-g0-7zu">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="QlQ-g0-7zu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

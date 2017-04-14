@@ -10,6 +10,10 @@ import UIKit
 import AVOSCloud
 
 class HomeViewController: UICollectionViewController {
+	var refresher: UIRefreshControl!
+	var page: Int = 12
+	var puuidArray = [String]()
+	var picArray = [AVFile]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +24,14 @@ class HomeViewController: UICollectionViewController {
         // Do any additional setup after loading the view.
 		
 		self.navigationItem.title = AVUser.current()?.username?.uppercased()
+		
+		refresher = UIRefreshControl()
+		refresher.addTarget(self,
+		                    action: #selector(refresh),
+		                    for: UIControlEvents.valueChanged)
+		collectionView?.addSubview(refresher)
+		
+		loadPosts()
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,18 +61,23 @@ class HomeViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 0
+        return picArray.count
     }
 
-	/*
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCell", for: indexPath) as! HomePictureCell
     
         // Configure the cell
-    
+		picArray[indexPath.row].getDataInBackground({(data: Data?, error: Error?) in
+			if (error == nil) {
+				cell.picImg.image = UIImage(data: data!)
+			} else {
+				print(error?.localizedDescription as Any)
+			}
+		})
+		
         return cell
     }
-	*/
 	
 	override func collectionView(_ collectionView: UICollectionView,
 	                             viewForSupplementaryElementOfKind kind: String,
@@ -75,11 +92,14 @@ class HomeViewController: UICollectionViewController {
 		header.bioLbl.text = AVUser.current()?.object(forKey: "bio") as? String
 		header.bioLbl.sizeToFit()
 		
-		// TODO: always throw exception, donot know why
-		// let avaQuery = AVUser.current()?.object(forKey: "ava") as! AVFile
-		// avaQuery.getDataInBackground {(data: Data?, error: Error?) in
-		//	header.avaImg.image = UIImage(data: data!)
-		// }
+		let avaQuery = AVUser.current()?.object(forKey: "ava") as! AVFile
+		avaQuery.getDataInBackground {(data: Data?, error: Error?) in
+			if (error == nil) {
+				header.avaImg.image = UIImage(data: data!)
+			} else {
+				print(error?.localizedDescription as Any)
+			}
+		}
 		return header
 	}
 
@@ -114,4 +134,28 @@ class HomeViewController: UICollectionViewController {
     }
     */
 
+	func refresh() {
+		collectionView?.reloadData()
+		refresher.endRefreshing()
+	}
+	
+	func loadPosts() {
+		let query = AVQuery(className: "Posts")
+		query.whereKey("username",
+		               equalTo: AVUser.current()?.username as Any)
+		query.limit = page
+		query.findObjectsInBackground({(objects: [Any]?, error: Error?) in
+			if error == nil {
+				self.puuidArray.removeAll(keepingCapacity: false)
+				self.picArray.removeAll(keepingCapacity: false)
+				for object in objects! {
+					self.puuidArray.append((object as AnyObject).value(forKey: "puuid") as! String)
+					self.picArray.append((object as AnyObject).value(forKey: "pic") as! AVFile)
+				}
+				self.collectionView?.reloadData()
+			} else {
+				print(error?.localizedDescription as Any)
+			}
+		})
+	}
 }
