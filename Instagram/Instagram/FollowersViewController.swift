@@ -65,7 +65,26 @@ class FollowersViewController: UITableViewController {
 				print(error?.localizedDescription as Any)
 			}
 		})
-
+		
+		let query = followerArray[indexPath.row].followeeQuery()
+		query.whereKey("user", equalTo: AVUser.current() as Any)
+		query.whereKey("followee", equalTo: followerArray[indexPath.row])
+		query.countObjectsInBackground({ (count: Int, error: Error?) in
+			if error == nil {
+				if count == 0 {
+					cell.followBtn.setTitle("关注", for: .normal)
+					cell.followBtn.backgroundColor = .lightGray
+				} else {
+					cell.followBtn.setTitle("已关注", for: .normal)
+					cell.followBtn.backgroundColor = .green
+				}
+			}
+		})
+		
+		cell.user = followerArray[indexPath.row]
+		if cell.usernameLbl.text == AVUser.current()?.username {
+			cell.followBtn.isHidden = true
+		}
         return cell
     }
 	
