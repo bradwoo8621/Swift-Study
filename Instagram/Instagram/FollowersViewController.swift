@@ -39,7 +39,11 @@ class FollowersViewController: UITableViewController {
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-		return 0
+		if followerArray.count != 0 {
+			return 1
+		} else {
+			return 0
+		}
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -50,7 +54,7 @@ class FollowersViewController: UITableViewController {
 	
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FollowerCell", for: indexPath) as! FollowerCell
-
+		
         // Configure the cell...
 		cell.usernameLbl.text = followerArray[indexPath.row].username
 		let ava = followerArray[indexPath.row].object(forKey: "ava") as! AVFile
