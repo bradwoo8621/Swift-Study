@@ -125,6 +125,25 @@ class HomeViewController: UICollectionViewController {
 				header.followingLbl.text = String(count)
 			}
 		})
+		
+		let postsTap = UITapGestureRecognizer(target: self,
+		                                      action: #selector(postsTap(_:)))
+		postsTap.numberOfTapsRequired = 1
+		header.postsLbl.isUserInteractionEnabled = true
+		header.postsLbl.addGestureRecognizer(postsTap)
+		
+		let followersTap = UITapGestureRecognizer(target: self,
+		                                          action: #selector(followersTap(_:)))
+		followersTap.numberOfTapsRequired = 1
+		header.followerLbl.isUserInteractionEnabled = true
+		header.followerLbl.addGestureRecognizer(followersTap)
+		
+		let followingsTap = UITapGestureRecognizer(target: self,
+		                                           action: #selector(followingsTap(_:)))
+		followingsTap.numberOfTapsRequired = 1
+		header.followingLbl.isUserInteractionEnabled = true
+		header.followingLbl.addGestureRecognizer(followingsTap)
+		
 		return header
 	}
 
@@ -182,5 +201,29 @@ class HomeViewController: UICollectionViewController {
 				print(error?.localizedDescription as Any)
 			}
 		})
+	}
+	
+	func postsTap(_ recognizer: UITapGestureRecognizer) {
+		if !picArray.isEmpty {
+			let index = IndexPath(item: 0,
+			                      section: 0)
+			self.collectionView?.scrollToItem(at: index,
+			                                  at: UICollectionViewScrollPosition.top,
+			                                  animated: true)
+		}
+	}
+	
+	func followersTap(_ recognizer: UITapGestureRecognizer) {
+		let followers = self.storyboard?.instantiateViewController(withIdentifier: "FollowersViewController") as! FollowersViewController
+		followers.user = (AVUser.current()?.username)!
+		followers.show = "关注者"
+		self.navigationController?.pushViewController(followers, animated: true)
+	}
+
+	func followingsTap(_ recognizer: UITapGestureRecognizer) {
+		let followings = self.storyboard?.instantiateViewController(withIdentifier: "FollowersViewController") as! FollowersViewController
+		followings.user = (AVUser.current()?.username)!
+		followings.show = "关注"
+		self.navigationController?.pushViewController(followings, animated: true)
 	}
 }
