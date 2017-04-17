@@ -276,4 +276,30 @@ class GuestViewController: UICollectionViewController {
 		followings.show = "关注"
 		self.navigationController?.pushViewController(followings, animated: true)
 	}
+	
+	@IBAction func followBtnClicked(_ sender: UIButton) {
+		let user = guestArray.last
+		let title = sender.title(for: .normal)
+		if title == "关注" {
+			guard user != nil else {return}
+			AVUser.current()?.follow((user?.objectId)!, andCallback: { (success: Bool, error: Error?) in
+				if success {
+					sender.setTitle("已关注", for: .normal)
+					sender.backgroundColor = .green
+				} else {
+					print(error?.localizedDescription as Any)
+				}
+			})
+		} else {
+			guard user != nil else {return}
+			AVUser.current()?.unfollow((user?.objectId)!, andCallback: {(success: Bool, error: Error?) in
+				if success {
+					sender.setTitle("关注", for: .normal)
+					sender.backgroundColor = .lightGray
+				} else {
+					print(error?.localizedDescription as Any)
+				}
+			})
+		}
+	}
 }
