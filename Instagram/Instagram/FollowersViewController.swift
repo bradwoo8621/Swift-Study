@@ -37,6 +37,7 @@ class FollowersViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
+	/*
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
 		if followerArray.count != 0 {
@@ -45,6 +46,7 @@ class FollowersViewController: UITableViewController {
 			return 0
 		}
     }
+	*/
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -88,6 +90,17 @@ class FollowersViewController: UITableViewController {
         return cell
     }
 	
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let cell = tableView.cellForRow(at: indexPath) as! FollowerCell
+		if cell.usernameLbl.text == AVUser.current()?.username {
+			let home = storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+			self.navigationController?.pushViewController(home, animated: true)
+		} else {
+			guestArray.append(followerArray[indexPath.row])
+			let guest = storyboard?.instantiateViewController(withIdentifier: "GuestViewController") as! GuestViewController
+			self.navigationController?.pushViewController(guest, animated: true)
+		}
+	}
 
     /*
     // Override to support conditional editing of the table view.

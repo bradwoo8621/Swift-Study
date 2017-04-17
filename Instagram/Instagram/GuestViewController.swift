@@ -1,37 +1,54 @@
 //
-//  HomeViewController.swift
+//  GuestViewController.swift
 //  Instagram
 //
-//  Created by brad.wu on 2017/4/14.
+//  Created by brad.wu on 2017/4/17.
 //  Copyright © 2017年 bradwoo8621. All rights reserved.
 //
 
 import UIKit
 import AVOSCloud
 
-class HomeViewController: UICollectionViewController {
-	var refresher: UIRefreshControl!
-	var page: Int = 12
+var guestArray = [AVUser]()
+
+class GuestViewController: UICollectionViewController {
 	var puuidArray = [String]()
 	var picArray = [AVFile]()
+	var refresher: UIRefreshControl!
+	let page: Int = 12
 
     override func viewDidLoad() {
         super.viewDidLoad()
-		
-		self.collectionView?.alwaysBounceVertical = true
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
+        // Register cell classes
+        // self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+
         // Do any additional setup after loading the view.
 		
-		self.navigationItem.title = AVUser.current()?.username?.uppercased()
+		self.collectionView?.alwaysBounceVertical = true
+		self.navigationItem.title = guestArray.last?.username
+		self.navigationItem.hidesBackButton = true
+		let backBtn = UIBarButtonItem(title: "返回",
+		                              style: .plain,
+		                              target: self,
+		                              action: #selector(back(_:)))
+		self.navigationItem.leftBarButtonItem = backBtn
+		
+		let backSwipe = UISwipeGestureRecognizer(target: self,
+		                                         action: #selector(back(_:)))
+		backSwipe.direction = .right
+		self.view.addGestureRecognizer(backSwipe)
 		
 		refresher = UIRefreshControl()
 		refresher.addTarget(self,
 		                    action: #selector(refresh),
-		                    for: UIControlEvents.valueChanged)
-		collectionView?.addSubview(refresher)
+							for: .valueChanged)
+		self.collectionView?.addSubview(refresher)
+		
+		self.collectionView?.backgroundColor = .white
 		
 		loadPosts()
     }
@@ -52,14 +69,13 @@ class HomeViewController: UICollectionViewController {
     */
 
     // MARK: UICollectionViewDataSource
-	
 	/*
-	// 默认值返回1
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 0
     }
 	*/
+
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
@@ -71,13 +87,13 @@ class HomeViewController: UICollectionViewController {
     
         // Configure the cell
 		picArray[indexPath.row].getDataInBackground({(data: Data?, error: Error?) in
-			if (error == nil) {
+			if error == nil {
 				cell.picImg.image = UIImage(data: data!)
 			} else {
 				print(error?.localizedDescription as Any)
 			}
 		})
-		
+    
         return cell
     }
 	
@@ -86,48 +102,73 @@ class HomeViewController: UICollectionViewController {
 	                             at indexPath: IndexPath) -> UICollectionReusableView {
 		let header = self.collectionView?.dequeueReusableSupplementaryView(
 			ofKind: UICollectionElementKindSectionHeader,
-			withReuseIdentifier: "HomeHeader", for: indexPath) as! HomeHeaderView
-		
-		header.fullnameLbl.text = (AVUser.current()?.object(forKey: "fullname") as? String)?.uppercased()
-		header.webTxt.text = AVUser.current()?.object(forKey: "web") as? String
-		header.webTxt.sizeToFit()
-		header.bioLbl.text = AVUser.current()?.object(forKey: "bio") as? String
-		header.bioLbl.sizeToFit()
-		
-		let avaQuery = AVUser.current()?.object(forKey: "ava") as! AVFile
-		avaQuery.getDataInBackground {(data: Data?, error: Error?) in
-			if (data == nil) {
-				print(error?.localizedDescription as Any)
+			withReuseIdentifier: "HomeHeader",
+			for: indexPath) as! HomeHeaderView
+		let infoQuery = AVQuery(className: "_User")
+		infoQuery.whereKey("username", equalTo: guestArray.last?.username as Any)
+		infoQuery.findObjectsInBackground({(objects: [Any]?, error: Error?) in
+			if error == nil {
+				guard let objects = objects, objects.count > 0 else {return}
+				for object in objects {
+					header.fullnameLbl.text = ((object as AnyObject).object(forKey: "fullname") as? String)?.uppercased()
+					header.bioLbl.text = (object as AnyObject).object(forKey: "bio") as? String
+					header.bioLbl.sizeToFit()
+					header.webTxt.text = (object as AnyObject).object(forKey: "web") as? String
+					header.webTxt.sizeToFit()
+					let avaFile = (object as AnyObject).object(forKey: "ava") as? AVFile
+					avaFile?.getDataInBackground({(data: Data?, error: Error?) in
+						if (error == nil && data != nil) {
+							header.avaImg.image = UIImage(data: data!)
+						}
+					})
+				}
 			} else {
-				header.avaImg.image = UIImage(data: data!)
+				print(error?.localizedDescription as Any)
 			}
-		}
+		})
 		
-		let currentUser: AVUser = AVUser.current()!
+		let followeeQuery = AVUser.current()?.followeeQuery()
+		followeeQuery?.whereKey("user", equalTo: AVUser.current() as Any)
+		followeeQuery?.whereKey("followee", equalTo: guestArray.last as Any)
+		followeeQuery?.countObjectsInBackground({(count: Int, error: Error?) in
+			guard error == nil else {
+				print(error?.localizedDescription as Any)
+				return
+			}
+			
+			if count == 0 {
+				header.button.setTitle("关注", for: .normal)
+				header.button.backgroundColor = .lightGray
+			} else {
+				header.button.setTitle("已关注", for: .normal)
+				header.button.backgroundColor = .green
+			}
+		})
+
 		let postsQuery = AVQuery(className: "Posts")
-		postsQuery.whereKey("username", equalTo: currentUser.username as Any)
+		postsQuery.whereKey("username", equalTo: guestArray.last?.username as Any)
 		postsQuery.countObjectsInBackground({ (count: Int, error: Error?) in
 			if error == nil {
-				header.postsLbl.text = String(count)
+				header.postsLbl.text = "\(count)"
 			}
 		})
 		
 		let followersQuery = AVQuery(className: "_Follower")
-		followersQuery.whereKey("user", equalTo: currentUser)
+		followersQuery.whereKey("user", equalTo: guestArray.last as Any)
 		followersQuery.countObjectsInBackground({ (count: Int, error: Error?) in
 			if error == nil {
-				header.followerLbl.text = String(count)
+				header.followerLbl.text = "\(count)"
 			}
 		})
 		
 		let followeesQuery = AVQuery(className: "_Followee")
-		followeesQuery.whereKey("user", equalTo: currentUser)
+		followeesQuery.whereKey("user", equalTo: guestArray.last as Any)
 		followeesQuery.countObjectsInBackground({ (count: Int, error: Error?) in
 			if error == nil {
-				header.followingLbl.text = String(count)
+				header.followingLbl.text = "\(count)"
 			}
 		})
-		
+
 		let postsTap = UITapGestureRecognizer(target: self,
 		                                      action: #selector(postsTap(_:)))
 		postsTap.numberOfTapsRequired = 1
@@ -179,16 +220,11 @@ class HomeViewController: UICollectionViewController {
     
     }
     */
-
-	func refresh() {
-		collectionView?.reloadData()
-		refresher.endRefreshing()
-	}
 	
 	func loadPosts() {
 		let query = AVQuery(className: "Posts")
 		query.whereKey("username",
-		               equalTo: AVUser.current()?.username as Any)
+		               equalTo: guestArray.last?.username as Any)
 		query.limit = page
 		query.findObjectsInBackground({(objects: [Any]?, error: Error?) in
 			if error == nil {
@@ -204,27 +240,39 @@ class HomeViewController: UICollectionViewController {
 			}
 		})
 	}
+
+	func back(_: UIBarButtonItem) {
+		self.navigationController?.popViewController(animated: true)
+		if !guestArray.isEmpty {
+			guestArray.removeLast()
+		}
+	}
+	
+	func refresh() {
+		self.collectionView?.reloadData()
+		self.refresher.endRefreshing()
+	}
 	
 	func postsTap(_ recognizer: UITapGestureRecognizer) {
 		if !picArray.isEmpty {
 			let index = IndexPath(item: 0,
 			                      section: 0)
 			self.collectionView?.scrollToItem(at: index,
-			                                  at: UICollectionViewScrollPosition.top,
+			                                  at: .top,
 			                                  animated: true)
 		}
 	}
 	
 	func followersTap(_ recognizer: UITapGestureRecognizer) {
 		let followers = self.storyboard?.instantiateViewController(withIdentifier: "FollowersViewController") as! FollowersViewController
-		followers.user = (AVUser.current()?.username)!
+		followers.user = (guestArray.last?.username)!
 		followers.show = "关注者"
 		self.navigationController?.pushViewController(followers, animated: true)
 	}
-
+	
 	func followingsTap(_ recognizer: UITapGestureRecognizer) {
 		let followings = self.storyboard?.instantiateViewController(withIdentifier: "FollowersViewController") as! FollowersViewController
-		followings.user = (AVUser.current()?.username)!
+		followings.user = (guestArray.last?.username)!
 		followings.show = "关注"
 		self.navigationController?.pushViewController(followings, animated: true)
 	}
