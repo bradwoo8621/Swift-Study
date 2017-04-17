@@ -180,12 +180,18 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
 		user.signUpInBackground { (success: Bool, error: Error?) in
 			if success {
 				print("用户注册成功")
-				// 记录用户名
-				UserDefaults.standard.set(user.username, forKey: "username")
-				// 立刻同步到磁盘上, 如果不调用, 则系统自行决定什么写入到磁盘
-				UserDefaults.standard.synchronize()
-				let appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
-				appDelegate.login()
+				AVUser.logInWithUsername(inBackground: user.username!,
+				                         password: user.password!,
+				                         block: { (user: AVUser?, error: Error?) in
+					if let user = user {
+						// 记录用户名
+						UserDefaults.standard.set(user.username, forKey: "username")
+						// 立刻同步到磁盘上, 如果不调用, 则系统自行决定什么写入到磁盘
+						UserDefaults.standard.synchronize()
+						let appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
+						appDelegate.login()
+					}
+				})
 			} else {
 				print(error?.localizedDescription as Any)
 			}

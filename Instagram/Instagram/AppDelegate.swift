@@ -61,10 +61,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func login() {
 		// 获取存储的用户名
 		let username: String? = UserDefaults.standard.string(forKey: "username")
+		// print(username as Any)
 		if username != nil {
 			let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
 			let myTabBar = storyboard.instantiateViewController(withIdentifier: "TabBar") as! UITabBarController
 			window?.rootViewController = myTabBar
+//			AVUser.current()?.follow("58f05dc0ac502e006c1ce910") {(success: Bool, error: Error?) in
+//				if success {
+//					print("follow success")
+//				} else {
+//					print("follow failed")
+//				}
+//			}
 		}
 	}
 }

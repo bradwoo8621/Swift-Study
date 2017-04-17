@@ -94,12 +94,37 @@ class HomeViewController: UICollectionViewController {
 		
 		let avaQuery = AVUser.current()?.object(forKey: "ava") as! AVFile
 		avaQuery.getDataInBackground {(data: Data?, error: Error?) in
-			if (error == nil) {
-				header.avaImg.image = UIImage(data: data!)
-			} else {
+			if (data == nil) {
 				print(error?.localizedDescription as Any)
+			} else {
+				header.avaImg.image = UIImage(data: data!)
 			}
 		}
+		
+		let currentUser: AVUser = AVUser.current()!
+		let postsQuery = AVQuery(className: "Posts")
+		postsQuery.whereKey("username", equalTo: currentUser.username as Any)
+		postsQuery.countObjectsInBackground({ (count: Int, error: Error?) in
+			if error == nil {
+				header.postsLbl.text = String(count)
+			}
+		})
+		
+		let followersQuery = AVQuery(className: "_Follower")
+		followersQuery.whereKey("user", equalTo: currentUser)
+		followersQuery.countObjectsInBackground({ (count: Int, error: Error?) in
+			if error == nil {
+				header.followerLbl.text = String(count)
+			}
+		})
+		
+		let followeesQuery = AVQuery(className: "_Followee")
+		followeesQuery.whereKey("user", equalTo: currentUser)
+		followeesQuery.countObjectsInBackground({ (count: Int, error: Error?) in
+			if error == nil {
+				header.followingLbl.text = String(count)
+			}
+		})
 		return header
 	}
 
