@@ -9,7 +9,7 @@
 import UIKit
 import AVOSCloud
 
-class HomeViewController: UICollectionViewController {
+class HomeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 	var refresher: UIRefreshControl!
 	var page: Int = 12
 	var puuidArray = [String]()
@@ -147,6 +147,13 @@ class HomeViewController: UICollectionViewController {
 		header.followingLbl.addGestureRecognizer(followingsTap)
 		
 		return header
+	}
+	
+	func collectionView(_ collectionView: UICollectionView,
+	                    layout collectionViewLayout: UICollectionViewLayout,
+	                    sizeForItemAt indexPath: IndexPath) -> CGSize {
+		return CGSize(width: self.view.frame.width / 3,
+		              height: self.view.frame.width / 3)
 	}
 
     // MARK: UICollectionViewDelegate

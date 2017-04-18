@@ -101,6 +101,11 @@ class FollowersViewController: UITableViewController {
 			self.navigationController?.pushViewController(guest, animated: true)
 		}
 	}
+	
+	override func tableView(_ tableView: UITableView,
+	                        heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return self.view.frame.width / 4
+	}
 
     /*
     // Override to support conditional editing of the table view.
