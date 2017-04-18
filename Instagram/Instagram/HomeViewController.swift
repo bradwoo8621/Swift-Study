@@ -228,4 +228,13 @@ class HomeViewController: UICollectionViewController {
 		followings.show = "关注"
 		self.navigationController?.pushViewController(followings, animated: true)
 	}
+	
+	@IBAction func logout(_ sender: UIBarButtonItem) {
+		AVUser.logOut()
+		UserDefaults.standard.removeObject(forKey: "username")
+		UserDefaults.standard.synchronize()
+		let signIn = self.storyboard?.instantiateViewController(withIdentifier: "SignInViewController")
+		let appDelegate = UIApplication.shared.delegate as! AppDelegate
+		appDelegate.window?.rootViewController = signIn
+	}
 }
