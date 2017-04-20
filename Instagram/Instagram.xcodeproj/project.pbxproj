@@ -14,6 +14,7 @@
 		7A6B64681EA07E6A007C4A0A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A6B64671EA07E6A007C4A0A /* HomeViewController.swift */; };
 		7A6B646A1EA07EA6007C4A0A /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A6B64691EA07EA6007C4A0A /* HomeHeaderView.swift */; };
 		7A6B646C1EA0807C007C4A0A /* HomePictureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A6B646B1EA0807C007C4A0A /* HomePictureCell.swift */; };
+		7A74F89C1EA8AFE000CF0700 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A74F89B1EA8AFE000CF0700 /* EditViewController.swift */; };
 		7A83AE471E9F25B2006F8EA7 /* Pacifico.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A83AE461E9F25B2006F8EA7 /* Pacifico.ttf */; };
 		7AAC8F821E97E1CC0021EAF5 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AAC8F811E97E1CC0021EAF5 /* SignInViewController.swift */; };
 		7AAC8F841E97E1EC0021EAF5 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AAC8F831E97E1EC0021EAF5 /* SignUpViewController.swift */; };
@@ -57,6 +58,7 @@
 		7A6B64671EA07E6A007C4A0A /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		7A6B64691EA07EA6007C4A0A /* HomeHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
 		7A6B646B1EA0807C007C4A0A /* HomePictureCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePictureCell.swift; sourceTree = "<group>"; };
+		7A74F89B1EA8AFE000CF0700 /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		7A83AE461E9F25B2006F8EA7 /* Pacifico.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pacifico.ttf; sourceTree = "<group>"; };
 		7AAC8F7D1E97C8570021EAF5 /* Instagram-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Instagram-Bridging-Header.h"; sourceTree = "<group>"; };
 		7AAC8F811E97E1CC0021EAF5 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -116,13 +118,13 @@
 		7AEE9FE71E976317004F737C = {
 			isa = PBXGroup;
 			children = (
-				7AC248B01E97BA56003D5341 /* Podfile */,
+				F329721F12FEE17DFD8D3EAB /* Frameworks */,
 				7AEE9FF21E976317004F737C /* Instagram */,
 				7AEEA0071E976317004F737C /* InstagramTests */,
 				7AEEA0121E976317004F737C /* InstagramUITests */,
-				7AEE9FF11E976317004F737C /* Products */,
+				7AC248B01E97BA56003D5341 /* Podfile */,
 				4AE9A6AD3140CF3911F69385 /* Pods */,
-				F329721F12FEE17DFD8D3EAB /* Frameworks */,
+				7AEE9FF11E976317004F737C /* Products */,
 			);
 			sourceTree = "<group>";
 			usesTabs = 1;
@@ -140,24 +142,25 @@
 		7AEE9FF21E976317004F737C /* Instagram */ = {
 			isa = PBXGroup;
 			children = (
-				7A6B64651EA06C60007C4A0A /* bg.jpg */,
-				7A83AE461E9F25B2006F8EA7 /* Pacifico.ttf */,
 				7AD8B9351E9B57CC00C2ECB2 /* 120.png */,
 				7AEE9FF31E976317004F737C /* AppDelegate.swift */,
-				7AEE9FF71E976317004F737C /* Main.storyboard */,
 				7AEE9FFA1E976317004F737C /* Assets.xcassets */,
-				7AEE9FFC1E976317004F737C /* LaunchScreen.storyboard */,
-				7AEE9FFF1E976317004F737C /* Info.plist */,
-				7AAC8F7D1E97C8570021EAF5 /* Instagram-Bridging-Header.h */,
-				7AAC8F811E97E1CC0021EAF5 /* SignInViewController.swift */,
-				7AAC8F831E97E1EC0021EAF5 /* SignUpViewController.swift */,
-				7AAC8F851E97E2000021EAF5 /* ResetPasswordViewController.swift */,
-				7A6B64671EA07E6A007C4A0A /* HomeViewController.swift */,
+				7A6B64651EA06C60007C4A0A /* bg.jpg */,
+				7A74F89B1EA8AFE000CF0700 /* EditViewController.swift */,
+				7A50AC531EA47524007B7418 /* FollowerCell.swift */,
+				7A50AC511EA474FD007B7418 /* FollowersViewController.swift */,
+				7A50AC551EA49955007B7418 /* GuestViewController.swift */,
 				7A6B64691EA07EA6007C4A0A /* HomeHeaderView.swift */,
 				7A6B646B1EA0807C007C4A0A /* HomePictureCell.swift */,
-				7A50AC511EA474FD007B7418 /* FollowersViewController.swift */,
-				7A50AC531EA47524007B7418 /* FollowerCell.swift */,
-				7A50AC551EA49955007B7418 /* GuestViewController.swift */,
+				7A6B64671EA07E6A007C4A0A /* HomeViewController.swift */,
+				7AEE9FFF1E976317004F737C /* Info.plist */,
+				7AAC8F7D1E97C8570021EAF5 /* Instagram-Bridging-Header.h */,
+				7AEE9FFC1E976317004F737C /* LaunchScreen.storyboard */,
+				7AEE9FF71E976317004F737C /* Main.storyboard */,
+				7A83AE461E9F25B2006F8EA7 /* Pacifico.ttf */,
+				7AAC8F851E97E2000021EAF5 /* ResetPasswordViewController.swift */,
+				7AAC8F811E97E1CC0021EAF5 /* SignInViewController.swift */,
+				7AAC8F831E97E1EC0021EAF5 /* SignUpViewController.swift */,
 			);
 			path = Instagram;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				7A50AC521EA474FD007B7418 /* FollowersViewController.swift in Sources */,
 				7AAC8F821E97E1CC0021EAF5 /* SignInViewController.swift in Sources */,
 				7AEE9FF41E976317004F737C /* AppDelegate.swift in Sources */,
+				7A74F89C1EA8AFE000CF0700 /* EditViewController.swift in Sources */,
 				7AAC8F861E97E2000021EAF5 /* ResetPasswordViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
