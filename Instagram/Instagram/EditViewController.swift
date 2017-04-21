@@ -161,5 +161,68 @@ class EditViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
 	}
 
 	@IBAction func saveClicked(_ sender: UIBarButtonItem) {
+		if !validateEmail(email: emailTxt.text!) {
+			alert(error: "错误的邮件地址", message: "请输入正确的邮件地址")
+			return
+		}
+		if !validateWeb(web: webTxt.text!) {
+			alert(error: "错误的网页链接", message: "请输入正确的网页链接地址")
+			return
+		}
+		if !validateMobilePhoneNumber(mobilePhoneNumber: telTxt.text!) {
+			alert(error: "错误的手机号码", message: "请输入正确的手机号码")
+			return
+		}
+		
+		let user = AVUser.current()
+		user?.username = usernameTxt.text?.lowercased()
+		user?.email = emailTxt.text?.lowercased()
+		user?["fullname"] = fullnameTxt.text?.lowercased()
+		user?["web"] = webTxt.text?.lowercased()
+		user?["bio"] = bioTxt.text
+		if telTxt.text!.isEmpty {
+			user?.mobilePhoneNumber = ""
+		} else {
+			user?.mobilePhoneNumber = telTxt.text
+		}
+		if genderTxt.text!.isEmpty {
+			user?["gender"] = ""
+		} else {
+			user?["gender"] = genderTxt.text
+		}
+		user?.saveInBackground({ (success: Bool, error: Error?) in
+			if success {
+				self.view.endEditing(true)
+				self.dismiss(animated: true, completion: nil)
+				
+				NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
+			} else {
+				print(error?.localizedDescription as Any)
+			}
+		})
+	}
+	
+	func validateEmail(email: String) -> Bool {
+		let regex = "\\w[-\\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\\.)+[A-Za-z]{2,14}"
+		let range = email.range(of: regex, options: .regularExpression)
+		let result = range != nil ? true : false
+		return result
+	}
+	
+	func validateWeb(web: String) -> Bool {
+		let regex = "www\\.[A-Za-z0-9._%+-]+\\.[A-Za-z]{2,14}"
+		let range = web.range(of: regex, options: .regularExpression)
+		return range != nil ? true : false
+	}
+	
+	func validateMobilePhoneNumber(mobilePhoneNumber: String) -> Bool {
+		return mobilePhoneNumber.range(of: "0?(13|14|15|18)[0-9]{9}", options: .regularExpression) != nil ? true : false
+	}
+	
+	func alert(error: String, message: String) {
+		let alert = UIAlertController(title: error, message: message, preferredStyle: .alert)
+		let ok = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+		alert.addAction(ok)
+		self.present(alert, animated: true, completion: nil)
 	}
 }

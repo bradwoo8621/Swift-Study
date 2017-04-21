@@ -34,7 +34,13 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
 		collectionView?.addSubview(refresher)
 		
 		loadPosts()
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name(rawValue: "reload"), object: loadPosts())
     }
+	
+	func reload(notification: Notification) {
+		collectionView?.reloadData()
+	}
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
