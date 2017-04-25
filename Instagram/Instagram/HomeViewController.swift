@@ -203,6 +203,35 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
 		refresher.endRefreshing()
 	}
 	
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		if scrollView.contentOffset.y >= scrollView.contentSize.height - self.view.frame.height {
+			self.loadMore()
+		}
+	}
+	
+	func loadMore() {
+		if page <= picArray.count {
+			page = page + 12
+			let query = AVQuery(className: "Posts")
+			query.whereKey("username", equalTo: AVUser.current()?.username as Any)
+			query.limit = page
+			query.findObjectsInBackground({(objects: [Any]?, error: Error?) in
+				if error == nil {
+					self.puuidArray.removeAll(keepingCapacity: false)
+					self.picArray.removeAll(keepingCapacity: false)
+					for object in objects! {
+						self.puuidArray.append((object as AnyObject).value(forKey: "puuid") as! String)
+						self.picArray.append((object as AnyObject).value(forKey: "pic") as! AVFile)
+					}
+					print("loaded + \(self.page)")
+					self.collectionView?.reloadData()
+				} else {
+					print(error?.localizedDescription as Any)
+				}
+			})
+		}
+	}
+	
 	func loadPosts() {
 		let query = AVQuery(className: "Posts")
 		query.whereKey("username",
