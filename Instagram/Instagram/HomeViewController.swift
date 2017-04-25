@@ -33,10 +33,15 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
 		                    for: UIControlEvents.valueChanged)
 		collectionView?.addSubview(refresher)
 		
-		loadPosts()
-		
 		NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name(rawValue: "reload"), object: loadPosts())
+		NotificationCenter.default.addObserver(self, selector: #selector(uploaded(notification:)), name: NSNotification.Name(rawValue: "uploaded"), object: nil)
+
+		loadPosts()
     }
+	
+	func uploaded(notification: Notification) {
+		loadPosts()
+	}
 	
 	func reload(notification: Notification) {
 		collectionView?.reloadData()
