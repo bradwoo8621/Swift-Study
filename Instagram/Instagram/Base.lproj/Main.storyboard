@@ -937,7 +937,7 @@
         <scene sceneID="IOg-zb-LKa">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8Ta-6v-Yuj" customClass="NavViewController" customModule="Instagram" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="上传" image="upload.png" selectedImage="home.png" id="yik-p4-hLJ"/>
+                    <tabBarItem key="tabBarItem" title="上传" image="upload.png" id="yik-p4-hLJ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="OXo-ne-m57">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -957,8 +957,8 @@
         <image name="120.png" width="120" height="120"/>
         <image name="comments.png" width="64" height="64"/>
         <image name="heart-icon-14.png" width="64" height="64"/>
-        <image name="home.png" width="32" height="32"/>
+        <image name="home.png" width="25" height="25"/>
         <image name="link.png" width="64" height="64"/>
-        <image name="upload.png" width="32" height="32"/>
+        <image name="upload.png" width="25" height="25"/>
     </resources>
 </document>
