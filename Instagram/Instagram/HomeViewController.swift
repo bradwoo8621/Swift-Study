@@ -166,6 +166,13 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
 		return CGSize(width: self.view.frame.width / 3,
 		              height: self.view.frame.width / 3)
 	}
+	
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		postuuid.append(puuidArray[indexPath.row])
+		
+		let postVC = self.storyboard?.instantiateViewController(withIdentifier: "PostViewController") as! PostViewController
+		self.navigationController?.pushViewController(postVC, animated: true)
+	}
 
     // MARK: UICollectionViewDelegate
 
