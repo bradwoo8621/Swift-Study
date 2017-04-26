@@ -209,7 +209,7 @@
         <scene sceneID="q1q-r5-PaF">
             <objects>
                 <collectionViewController storyboardIdentifier="HomeViewController" id="qZ7-zp-p2W" customClass="HomeViewController" customModule="Instagram" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="ePE-zg-W75">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="ePE-zg-W75">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -412,10 +412,10 @@
             </objects>
             <point key="canvasLocation" x="2125.5999999999999" y="812.74362818590714"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Tab Bar View Controller-->
         <scene sceneID="ozG-1A-h3c">
             <objects>
-                <tabBarController storyboardIdentifier="TabBar" id="mUf-iL-0Ig" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBar" id="mUf-iL-0Ig" customClass="TabBarViewController" customModule="Instagram" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="KL1-eT-aee">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -484,13 +484,13 @@
             </objects>
             <point key="canvasLocation" x="1445.5999999999999" y="122.78860569715144"/>
         </scene>
-        <!--Item-->
+        <!--我的-->
         <scene sceneID="IUk-Gk-CGM">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5iq-yq-qo6" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="cyy-P6-5Lp"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5iq-yq-qo6" customClass="NavViewController" customModule="Instagram" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="我的" image="home.png" id="cyy-P6-5Lp"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QlQ-g0-7zu">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="QlQ-g0-7zu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -540,15 +540,10 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="heb-8v-2Wy">
-                                            <rect key="frame" x="10" y="415" width="46" height="30"/>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="heb-8v-2Wy">
+                                            <rect key="frame" x="8" y="414" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="喜爱"/>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="npj-YJ-gaN">
-                                            <rect key="frame" x="321" y="415" width="46" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="更多"/>
+                                            <state key="normal" image="heart-icon-14.png"/>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="93Y-sw-NZ8">
                                             <rect key="frame" x="64" y="419" width="42" height="21"/>
@@ -571,10 +566,15 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fsX-ht-WBx">
-                                            <rect key="frame" x="148" y="415" width="81" height="30"/>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fsX-ht-WBx">
+                                            <rect key="frame" x="161" y="414" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="评论"/>
+                                            <state key="normal" image="comments.png"/>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="npj-YJ-gaN">
+                                            <rect key="frame" x="337" y="414" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" image="link.png"/>
                                         </button>
                                     </subviews>
                                 </tableViewCellContentView>
@@ -606,7 +606,7 @@
         <scene sceneID="uby-ch-jOO">
             <objects>
                 <collectionViewController storyboardIdentifier="GuestViewController" id="cq1-3l-sbf" customClass="GuestViewController" customModule="Instagram" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="hfR-DR-dr3">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="hfR-DR-dr3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -915,12 +915,12 @@
             </objects>
             <point key="canvasLocation" x="2816.8000000000002" y="1477.5112443778112"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Nav View Controller-->
         <scene sceneID="oGg-L5-jU8">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uZX-1Z-LUU" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uZX-1Z-LUU" customClass="NavViewController" customModule="Instagram" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Zhb-MY-UWW">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Zhb-MY-UWW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -933,13 +933,13 @@
             </objects>
             <point key="canvasLocation" x="2125.5999999999999" y="1477.5112443778112"/>
         </scene>
-        <!--Item-->
+        <!--上传-->
         <scene sceneID="IOg-zb-LKa">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8Ta-6v-Yuj" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="yik-p4-hLJ"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8Ta-6v-Yuj" customClass="NavViewController" customModule="Instagram" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="上传" image="upload.png" selectedImage="home.png" id="yik-p4-hLJ"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="OXo-ne-m57">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="OXo-ne-m57">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -955,5 +955,10 @@
     </scenes>
     <resources>
         <image name="120.png" width="120" height="120"/>
+        <image name="comments.png" width="64" height="64"/>
+        <image name="heart-icon-14.png" width="64" height="64"/>
+        <image name="home.png" width="32" height="32"/>
+        <image name="link.png" width="64" height="64"/>
+        <image name="upload.png" width="32" height="32"/>
     </resources>
 </document>

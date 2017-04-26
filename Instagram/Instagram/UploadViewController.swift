@@ -30,15 +30,21 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
 		picTap.numberOfTapsRequired = 1
 		self.picImg.isUserInteractionEnabled = true
 		self.picImg.addGestureRecognizer(picTap)
-		
-		alignment()
     }
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		alignment()
+	}
 	
 	func alignment() {
 		let width = self.view.frame.width
-		picImg.frame = CGRect(x: 15, y: self.navigationController!.navigationBar.frame.height + 35, width: width / 4.5, height: width / 4.5)
+		let height = self.view.frame.height
+
+		picImg.frame = CGRect(x: 15, y: 15, width: width / 4.5, height: width / 4.5)
 		titleTxt.frame = CGRect(x: picImg.frame.width + 25, y: picImg.frame.origin.y, width: width - titleTxt.frame.origin.x - 10, height: picImg.frame.height)
-		publishBtn.frame = CGRect(x: 0, y: self.tabBarController!.tabBar.frame.origin.y - width / 8, width: width, height: width / 8)
+		
+		publishBtn.frame = CGRect(x: 0, y: height - width / 8, width: width, height: width / 8)
 		removeBtn.frame = CGRect(x: picImg.frame.origin.x, y: picImg.frame.origin.y + picImg.frame.height, width: picImg.frame.width, height: 30)
 	}
 	
@@ -64,8 +70,8 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
 	}
 	
 	func zoomImg() {
-		let zoomed = CGRect(x: 0, y: self.view.center.y - self.view.center.x, width: self.view.frame.width, height: self.view.frame.width)
-		let unzoomed = CGRect(x: 15, y: self.navigationController!.navigationBar.frame.height + 35, width: self.view.frame.width / 4.5, height: self.view.frame.width / 4.5)
+		let zoomed = CGRect(x: 0, y: self.view.center.y - self.view.center.x - (self.navigationController?.navigationBar.frame.height)! * 1.5, width: self.view.frame.width, height: self.view.frame.width)
+		let unzoomed = CGRect(x: 15, y: 15, width: self.view.frame.width / 4.5, height: self.view.frame.width / 4.5)
 		
 		if picImg.frame == unzoomed {
 			UIView.animate(withDuration: 0.3, animations: {
@@ -73,6 +79,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
 				self.view.backgroundColor = .black
 				self.titleTxt.alpha = 0
 				self.publishBtn.alpha = 0
+				self.removeBtn.alpha = 0
 			})
 		} else {
 			UIView.animate(withDuration: 0.3, animations: {
@@ -80,6 +87,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
 				self.view.backgroundColor = .white
 				self.titleTxt.alpha = 1
 				self.publishBtn.alpha = 1
+				self.removeBtn.alpha = 1
 			})
 		}
 	}

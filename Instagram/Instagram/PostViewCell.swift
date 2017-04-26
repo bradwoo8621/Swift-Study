@@ -78,11 +78,11 @@ class PostViewCell: UITableViewCell {
 			options: [], metrics: nil,
 			views: ["pic": picImg]))
 		self.contentView.addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "H:|-15-[like(40)]-10-[likes]-20-[comment(40)]",
+			withVisualFormat: "H:|-15-[like(30)]-10-[likes]-20-[comment(30)]",
 			options: [], metrics: nil,
 			views: ["like": likeBtn, "likes": likeLbl, "comment": commentsBtn]))
 		self.contentView.addConstraints(NSLayoutConstraint.constraints(
-			withVisualFormat: "H:[more(40)]-15-|",
+			withVisualFormat: "H:[more(30)]-15-|",
 			options: [], metrics: nil,
 			views: ["more": moreBtn]))
 		self.contentView.addConstraints(NSLayoutConstraint.constraints(
@@ -93,7 +93,10 @@ class PostViewCell: UITableViewCell {
 			withVisualFormat: "H:|[date]-10-|",
 			options: [], metrics: nil,
 			views: ["date": dateLbl]))
-    }
+
+		avaImg.layer.cornerRadius = avaImg.frame.width / 2
+		avaImg.clipsToBounds = true
+	}
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

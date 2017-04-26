@@ -58,7 +58,14 @@ class GuestViewController: UICollectionViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    /*
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		postuuid.append(puuidArray[indexPath.row])
+		
+		let postVC = self.storyboard?.instantiateViewController(withIdentifier: "PostViewController") as! PostViewController
+		self.navigationController?.pushViewController(postVC, animated: true)
+	}
+
+	/*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
